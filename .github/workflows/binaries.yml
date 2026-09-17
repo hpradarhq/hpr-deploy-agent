@@ -47,10 +47,12 @@ jobs:
           go build -trimpath -ldflags "-s -w -X main.version=${GITHUB_SHA}" \
             -o "dist/deploy-agent-${{ matrix.suffix }}" ./cmd/deploy-agent
       - uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request'
         with:
           name: deploy-agent-${{ matrix.suffix }}
           path: dist/*
           if-no-files-found: error
+          retention-days: 1
 
   edge-release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

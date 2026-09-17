@@ -46,6 +46,7 @@ jobs:
           name: deploy-agent-${{ matrix.suffix }}
           path: dist/*
           if-no-files-found: error
+          retention-days: 1
 
   release:
     needs: build
